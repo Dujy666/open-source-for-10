@@ -1,85 +1,160 @@
-#include <stdio.h>  
-#include <stdlib.h>  
-int main()  
-{  
-    FILE *fp,*fp1;  
-    int No1,No2,No3,Prize_total,People_total,Roll,output;
-	char main_info[100],No1_info[50],No2_info[50],No3_info[50];
-    fp=fopen("options.xls","w");
-	fp1=fopen("data.xls","w");
-    if(fp==NULL)  
-    {  
-        printf("ÎŞ·¨´ò¿ªÎÄ¼ş " );  
-        exit(0);  
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void Interface(void)
+{
+    printf("---------------Lottery Program------------\n");
+    printf("                 1.Rules                  \n");
+    printf("                 2.Sign Up                \n");
+    printf("                 3.Check                  \n");
+    printf("                 4.Clear                  \n");
+    printf("                 5.Star                   \n");
+    printf("                 6.Result                 \n");
+    printf("                 7.Exit                   \n");
+    printf("------------------------------------------\n");
+}
+
+void Display_Rules(void)
+{
+    FILE *fp, *fp1;
+    int No1, No2, No3, Prize_total, People_total, Roll, output;
+    char main_info[100], No1_info[50], No2_info[50], No3_info[50];
+    fp = fopen("options.xls", "w");
+    fp1 = fopen("data.xls", "w");
+    if(fp == NULL)
+    {
+        printf("Could not open file!");
+        exit(0);
     }
-	printf("³é½±ÉèÖÃ\n");
-	printf("------------------------------------------------------\n");
-	printf("³é½±ĞÅÏ¢¼ò½é£º");
-	scanf("%s",main_info);
-	fprintf(fp,"³é½±ĞÅÏ¢¼ò½é\t   %s\n",main_info);
-	printf("\n\n");
-	printf("------------------------------------------------------\n");
-	printf("½±ÏîÉèÖÃ");
-	printf("\n");
+    printf("Lottery setting\n");
+    printf("------------------------------------------------------\n");
+    printf("Lottery infoï¼š");
+    scanf("%*c");
+    scanf("%[^\n]", main_info);
+    fprintf(fp, "æŠ½å¥–ä¿¡æ¯ç®€ä»‹\t   %s\n", main_info);
+    printf("\n\n");
+    printf("------------------------------------------------------\n");
+    printf("Award setting");
+    printf("\n");
 
-	printf("Ò»µÈ½±ÊıÁ¿£º");
-	scanf("%d",&No1);
-	printf("Ò»µÈ½±½±Æ·£º");
-	scanf("%s",No1_info);
-	printf("\n");
+    printf("The number of the first prizeï¼š");
+    scanf("%d", &No1);
+    printf("The prizes of the first prizeï¼š");
+    scanf("%*c");
+    scanf("%[^\n]", No1_info);
+    printf("\n");
 
-	printf("¶şµÈ½±ÊıÁ¿£º");
-	scanf("%d",&No2);
-	printf("¶şµÈ½±½±Æ·£º");
-	scanf("%s",No2_info);
-	printf("\n");
+    printf("The number of the second prizeï¼š");
+    scanf("%d", &No2);
+    printf("The prizes of the second prizeï¼š");
+    scanf("%*c");
+    scanf("%[^\n]", No2_info);
+    printf("\n");
 
-	printf("ÈıµÈ½±ÊıÁ¿£º");
-	scanf("%d",&No3);
-	printf("ÈıµÈ½±½±Æ·£º");
-	scanf("%s",No3_info);
-	printf("\n");
+    printf("The number of the third prizeï¼š");
+    scanf("%d", &No3);
+    printf("The prizes of the third prizeï¼š");
+    scanf("%*c");
+    scanf("%[^\n]", No3_info);
+    printf("\n");
 
-	fprintf(fp,"Ò»µÈ½±ÊıÁ¿\t   %d\n",No1);
-	fprintf(fp,"Ò»µÈ½±½±Æ·\t   %s\n",No1_info);
+    fprintf(fp, "ä¸€ç­‰å¥–æ•°é‡\t   %d\n", No1);
+    fprintf(fp, "ä¸€ç­‰å¥–å¥–å“\t   %s\n", No1_info);
 
-	fprintf(fp,"¶şµÈ½±ÊıÁ¿\t   %d\n",No2);
-	fprintf(fp,"¶şµÈ½±½±Æ·\t   %s\n",No2_info);
+    fprintf(fp, "äºŒç­‰å¥–æ•°é‡\t   %d\n", No2);
+    fprintf(fp, "äºŒç­‰å¥–å¥–å“\t   %s\n", No2_info);
 
-	fprintf(fp,"ÈıµÈ½±ÊıÁ¿\t   %d\n",No3);
-	fprintf(fp,"ÈıµÈ½±½±Æ·\t   %s\n",No3_info);
+    fprintf(fp, "ä¸‰ç­‰å¥–æ•°é‡\t   %d\n", No3);
+    fprintf(fp, "ä¸‰ç­‰å¥–å¥–å“\t   %s\n", No3_info);
 
-	Prize_total=No1+No2+No3;
-	printf("\n\n");
-	printf("------------------------------------------------------\n");
-	printf("ÈËÊıÉèÖÃ");
-	printf("\n");
+    Prize_total = No1 + No2 + No3;
+    printf("\n\n");
+    printf("------------------------------------------------------\n");
+    printf("Participants setting");
+    printf("\n");
 
 
-	printf("³é½±×ÜÈËÊı£¨Ğè´óÓÚµÈÓÚ%d£©£º",Prize_total);
-	scanf("%d",&People_total);
-	while(People_total<Prize_total){
-		printf("ÖØĞÂÊäÈë£º");
-		scanf("%d",&People_total);
-	}
-	fprintf(fp,"³é½±×ÜÈËÊı\t   %d\n",People_total);
-	printf("\n\n");
-	printf("------------------------------------------------------\n");
-	printf("ÔÓÏîÉèÖÃ");
-	printf("\n");
+    printf("The number of participantï¼ˆmust be >= %dï¼‰ï¼š", Prize_total);
+    scanf("%d", &People_total);
+    while(People_total < Prize_total){
+        printf("Enter againï¼š");
+        scanf("%d", &People_total);
+    }
+    fprintf(fp, "æŠ½å¥–æ€»äººæ•°\t   %d\n", People_total);
+    printf("\n\n");
+    printf("------------------------------------------------------\n");
+    printf("Other setting");
+    printf("\n");
 
-	printf("ÖĞ½±ĞÅÏ¢ÊÇ·ñ¹ö¶¯£¨ÊÇ=1 n=0£©£º");
-	scanf("%d",&Roll);
-	fprintf(fp,"¹ö¶¯\t   %d\n",Roll);
-	printf("\n");
+    printf("Winners' info roll or not?ï¼ˆY = 1 N = 0ï¼‰ï¼š");
+    scanf("%d", &Roll);
+    fprintf(fp, "æ»šåŠ¨\t   %d\n", Roll);
+    printf("\n");
 
-	printf("ÖĞ½±ĞÅÏ¢ÏÔÊ¾¸ñÊ½£º\nĞÅÏ¢È«²¿ÏÔÊ¾£º1\nĞÕÃû+Ñ§ºÅ£º2\nĞÕÃû+µç»°£º3\nÄÇÖÖ·½Ê½£¿");
-	scanf("%d",&output);
-	fprintf(fp,"¸ñÊ½\t   %d\n",output);
-	printf("\n\n");
-	printf("------------------------------------------------------\n");
-	fprintf(fp1,"%d\t%d\t%d\t%d\t%d\t%d\t%d\t",No1,No2,No3,Prize_total,People_total,Roll,output);
+    printf("The format of winners' infoï¼š\nall of infoï¼š1\n"
+           "Name + Student No.ï¼š2\nName + Telï¼š3\nWhat kind of format "
+           "do you likeï¼Ÿ");
+    scanf("%d", &output);
+    fprintf(fp, "æ ¼å¼\t   %d\n", output);
+    printf("\n\n");
+    printf("------------------------------------------------------\n");
+    fprintf(fp1, "%d\t%d\t%d\t%d\t%d\t%d\t%d\t", No1, No2, No3, Prize_total,
+            People_total, Roll, output);
     fclose(fp);
-	fclose(fp1);
-    return 0;  
-}  
+    fclose(fp1);
+}
+
+void Sign_Up(void)
+{
+    printf(".................\n");
+    printf(".................\n");
+    printf(".................\n");
+}
+
+void Check(void)
+{
+    printf(".................\n");
+    printf(".................\n");
+    printf(".................\n");
+}
+
+void Quit(void)
+{
+    printf("You have exit the program!\n");
+}
+
+void Choose_Interface(void)
+{
+    int choice1, choice2;
+    while (1)
+    {
+        scanf("%d", &choice1);
+        system("clear");
+        switch (choice1)
+        {
+            case 1: Display_Rules();
+                    break;
+            case 2: Sign_Up();
+                    break;
+            case 3: Check();
+                break;
+        }
+        scanf("%d", &choice2);
+        if(choice2 == 0)
+        {
+            system("clear");
+            Interface();
+        }
+        else
+            break;
+    }
+}
+
+int main()
+{
+    Interface();
+    Choose_Interface();
+
+    return 0;
+}
