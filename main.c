@@ -1,4 +1,4 @@
-//clear original meau
+//clear all original output, and when you enter 0 return menu
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,16 +45,24 @@ void Quit(void)
 
 void Choose_Interface(int enter)
 {
-	switch (enter)
-        {
-		case 1: Display_Rules();
-			break;
-		case 2: Sign_Up();
-			break;
-		case 3: Check();
-			break;
-		default:
-			break;
+	int enter2;
+	while(1){
+		switch (enter)
+        	{
+			case 1: Display_Rules();
+				break;
+			case 2: Sign_Up();
+				break;
+			case 3: Check();
+				break;
+			default:
+				break;
+		}
+		system("clear");
+		scanf("%d", &enter2);
+		if(enter2 == 0)
+			Interface();
+		break;
         }
 }
 
@@ -64,9 +72,9 @@ int main()
 
 	int enter;
 	scanf("%d", &enter);
-	system("clear");
 	Choose_Interface(enter);
 
 	return 0;
 }
+
 
