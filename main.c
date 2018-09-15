@@ -1,4 +1,4 @@
-//normal clear
+//normal reset
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +49,7 @@ void Choose_Interface(void)
     while (1)
     {
         scanf("%d", &choice1);
-        system("clear");
+        system("reset");
         switch (choice1)
         {
             case 1: Display_Rules();
@@ -62,7 +62,7 @@ void Choose_Interface(void)
         scanf("%d", &choice2);
         if(choice2 == 0)
         {
-            system("clear");
+            system("reset");
             Interface();
         }
         else
