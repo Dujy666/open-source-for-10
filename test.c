@@ -1,21 +1,19 @@
-//test fopen("data.txt", "r")
+//normal output
 
 #include <stdio.h>
-#include <stdlib.h>
 
 int main(void)
 {
-	char name[20];
-	char s;
+	char enter[1000] = {0};
+	char info[1000];
 	FILE *fp = NULL;
-//	printf("Enter file name: \n");
-//	fgets(name, 20, stdin);
-	if((fp = fopen("data.txt", "r")) == NULL)
+	printf("Enter the student No. that you want to check:  \n");
+	scanf("%s", enter);
+	if((fp = fopen(enter, "r")) == NULL)
 		printf("Fail");
-	while(fgets(name, 20, fp))
-	{
-		printf("%s", name);
-	}
+	while(fgets(info, sizeof(info), fp))
+		printf("%s", info);
 	fclose(fp);
 	return 0;
 }
+
