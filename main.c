@@ -1,7 +1,13 @@
+//File name:Lottery_main.c
+//Author:Group 10
+//Date:2018.9.28
+//Annotation:2018.10.9
+
+
 #include<stdio.h>
 #include"function.h"
 
-
+//User selection page
 void Interface(void)
 {
     printf("---------------Lottery Program------------\n");
@@ -14,6 +20,7 @@ void Interface(void)
     printf("------------------------------------------\n");
 }	
 
+//User selection and return
 void Choose_Interface(void)
 {
     int choice1, choice2;
@@ -52,7 +59,7 @@ void Choose_Interface(void)
     }
 }
 
-
+//main function
 int main()
 {
     Interface();
