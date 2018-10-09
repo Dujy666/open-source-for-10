@@ -1,3 +1,9 @@
+//File name:function.c
+//Author:Group 10
+//Date:2018.9.28
+//Annotation:2018.10.9
+
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
@@ -43,6 +49,7 @@ void close_keyboard(){
 	tcsetattr(0,TCSANOW,&initial_settings);
 }
 
+//Read the data in the lottery Settings from the data.xls
 int get_data(int n)
 {
     FILE * fp = fopen("data.xls", "r");
@@ -61,7 +68,7 @@ int get_data(int n)
     return (a[n]);
 }
 
-
+//Check files
 void Check()
 {
 	
@@ -98,7 +105,7 @@ void Check()
         }
 }
 
-
+//Scroll and lottery 
 void rollandprint(char x[],int y,int jde,int info)
 {
 	int ch=0;
@@ -203,7 +210,7 @@ void rollandprint(char x[],int y,int jde,int info)
 
 
 
-
+//Carry out lottery settings
 void Display_Rules()
 {
     FILE *fp, *fp1;
@@ -304,6 +311,7 @@ void Display_Rules()
   
 }
 
+//Enter candidate information(one man,one file)
 void Sign_Up()
 {
     
@@ -369,7 +377,7 @@ void Sign_Up()
 }
 
 
-
+//Active lottery and save results.
 void start()
 {
 	int first = get_data(0);
@@ -430,6 +438,7 @@ void start()
 	
 }
 
+//Check result and delete.
 void Result()
 {
 	FILE *fp=fopen("result.txt","r");
