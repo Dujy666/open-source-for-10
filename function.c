@@ -86,15 +86,7 @@ void Check()
 	char check1[20];
 	char put;
 	int i = 1;
-	printf("1:Check files\n2:Go back\n");
-    	while (1)
-    	{
-    	    scanf("%d", &choice1);
-    	    system("clear");
-    	    switch (choice1)
-    	    {
-    	        case 1: 
-			while(i==1){
+	while(i==1){
 				//User enter a file's name,find and check.
 				printf("Enter file's name to check:");
 				scanf("%s",check1);
@@ -108,12 +100,9 @@ void Check()
 				scanf("%d",&i);
 			}
 			system("clear");
-			Check();
-    	                break;
-    	        case 2: system("clear");
-			break;
-        }
-        }
+    	               
+    	   
+        
 }
 
 //Scroll and lottery 
@@ -496,7 +485,7 @@ void Result()
 		printf("press 0 to return.");
 	}
 	if(s==0){
-		printf("press 0 to return.");
+		printf("");
 	}
 			
 		
