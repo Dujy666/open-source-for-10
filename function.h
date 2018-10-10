@@ -18,6 +18,7 @@ static int alltimes;
 void init_keyboard();
 int kbhit();
 void close_keyboard();
+void buffer_clear();
 int get_data(int n);
 void Check();
 void rollandprint(char x[],int y,int jde,int info);
