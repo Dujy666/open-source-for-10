@@ -1,6 +1,5 @@
 //File name:Lottery_main.c
 //Author:Group 10
-//Date:2018.9.28
 //Annotation:2018.10.9
 
 
