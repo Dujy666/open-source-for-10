@@ -23,6 +23,7 @@ void Interface(void)
 void Choose_Interface(void)
 {
     int choice1, choice2;
+	int flag = 0;
     while (1)
     {
         scanf("%d", &choice1);
@@ -45,16 +46,20 @@ void Choose_Interface(void)
 		    Result();
 		    break;
 	    case 6:system("reset");
+	            flag = 1;
 		    break;
         }
-        scanf("%d", &choice2);
-        if(choice2 == 0)
-        {
-            system("clear");
-            Interface();
-        }
-        else
+	if(flag!=1){	
+		printf("Press 0 to return.");
+        	scanf("%d", &choice2);
+        	if(choice2 == 0)
+        	{
+        	    system("clear");
+        	    Interface();
+        	}
+        }else{
             break;
+	}
     }
 }
 
