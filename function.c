@@ -1,6 +1,5 @@
 //File name:function.c
 //Author:Group 10
-//Date:2018.9.28
 //Annotation:2018.10.9
 
 
@@ -17,6 +16,7 @@ static struct termios initial_settings,new_settings;
 static int peek_character=-1;
 static int alltimes;
 
+//Configure the terminal at the beginning of the program.
 void init_keyboard(){
 	tcgetattr(0,&initial_settings);
 	new_settings=initial_settings;
@@ -28,7 +28,7 @@ void init_keyboard(){
 	tcsetattr(0,TCSANOW,&new_settings);
 }
 
-
+//Detection keyboard
 int kbhit(){
 	char ch;
 	int nread;
@@ -45,8 +45,16 @@ int kbhit(){
 	return 0;
 }
 
+//Configure the terminal at the end of the program.
 void close_keyboard(){
 	tcsetattr(0,TCSANOW,&initial_settings);
+}
+
+//Buffer clear
+void buffer_clear()
+{
+	fflush(stdin);
+	scanf("%*c");
 }
 
 //Read the data in the lottery Settings from the data.xls
@@ -87,12 +95,15 @@ void Check()
     	    {
     	        case 1: 
 			while(i==1){
+				//User enter a file's name,find and check.
 				printf("Enter file's name to check:");
 				scanf("%s",check1);
 				fpcheck = fopen(check1,"r");
 				while((put=fgetc(fpcheck))!=EOF)
        					fputc(put,stdout);
 				fclose(fpcheck);
+
+				//Asking for a new run.
 				printf("\nKeep checking?(Y:1 N:0):");
 				scanf("%d",&i);
 			}
@@ -111,11 +122,16 @@ void rollandprint(char x[],int y,int jde,int info)
 	int ch=0;
 	char d[10];
 	int a,b;
+	//Initialization keyboard and random seed.
 	init_keyboard();
 	srand(time(NULL));
+
+	
 	a=x[rand()%y];
 	
 	printf("\n");
+
+	//If user wants to roll
 	if(jde==1){
 		while(!kbhit()){
 			a=x[rand()%y];
@@ -125,6 +141,8 @@ void rollandprint(char x[],int y,int jde,int info)
 			printf("\033[0m");
 		}
 	}
+
+	//If a number was selected,then deleted it.
 	b = a;
 	for(int i=0;i<y;i++){
 		if(b==x[i]){
@@ -135,8 +153,10 @@ void rollandprint(char x[],int y,int jde,int info)
 		}
 	}
 	printf("\n");
+	
 	sprintf(d, "%d",b);
 	FILE *fp1 = fopen(d,"r");
+
 	FILE *fp2 = fopen("result.txt","a");
 	char chd;
 	char line[1024];
@@ -146,22 +166,22 @@ void rollandprint(char x[],int y,int jde,int info)
 	if(info == 1){
 		while((chd=fgetc(fp1))!=EOF)
        			fputc(chd,stdout);
-		rewind(fp1);
+		rewind(fp1);//Reset the pointer
 		while(i<5){
-			fgets(line1,1024,fp1);
-			fprintf(fp2,"%s",line1);
+			fgets(line1,1024,fp1); //read a line and locate to next line
+			fprintf(fp2,"%s",line1);//write into result.txt
 			i++;
 			}
-			fprintf(fp2,"%s",blank);
+			fprintf(fp2,"%s",blank);//Add a \n
 	}
 	if(info == 2){
 		while(!feof(fp1)){
 			if(i==1){
-				fgets(line,1024,fp1);
+				fgets(line,1024,fp1);//read a line 
 				printf("%s",line);
 				fprintf(fp2,"%s",line);
 			}
-			fgets(line,1024,fp1);
+			fgets(line,1024,fp1);//read a line and locate to next line.Lower part the same.   
 			i++;
 		}
 		rewind(fp1);
@@ -233,12 +253,17 @@ void Display_Rules()
     
     printf("Lottery setting\n");
     printf("------------------------------------------------------\n");
+
+    //Enter lottery info and write into file
     printf("Lottery info：");
     scanf("%*c");
     scanf("%[^\n]", main_info);
     fprintf(fp, "抽奖信息简介\t   %s\n", main_info);
+
     printf("\n\n");
     printf("------------------------------------------------------\n");
+
+    //Set your awards and write into file.
     printf("Award setting");
     printf("\n");
 
@@ -272,13 +297,14 @@ void Display_Rules()
     fprintf(fp, "三等奖数量\t   %d\n", No3);
     fprintf(fp, "三等奖奖品\t   %s\n", No3_info);
 
+	
     Prize_total = No1 + No2 + No3;
     printf("\n\n");
     printf("------------------------------------------------------\n");
     printf("Participants setting");
     printf("\n");
 
-
+    //Number of participants
     printf("The number of participant（must be >= %d）：", Prize_total);
     scanf("%d", &People_total);
     while(People_total < Prize_total){
@@ -286,23 +312,30 @@ void Display_Rules()
         scanf("%d", &People_total);
     }
     fprintf(fp, "抽奖总人数\t   %d\n", People_total);
+
     printf("\n\n");
     printf("------------------------------------------------------\n");
+
     printf("Other setting");
     printf("\n");
 
+    //Roll selection
     printf("Winners' info roll or not?（Y = 1 N = 0）：");
     scanf("%d", &Roll);
     fprintf(fp, "滚动\t   %d\n", Roll);
     printf("\n");
 
+    //Winning message display format 
     printf("The format of winners' info：\nall of info：1\n"
            "Name + Student No.：2\nName + Tel：3\nWhat kind of format "
            "do you like？");
     scanf("%d", &output);
     fprintf(fp, "格式\t   %d\n", output);
+
     printf("\n\n");
     printf("------------------------------------------------------\n");
+
+    //Write all options into file
     fprintf(fp1, "%d\t%d\t%d\t%d\t%d\t%d\t%d\t", No1, No2, No3, Prize_total,
             People_total, Roll, output);
     
@@ -330,19 +363,24 @@ void Sign_Up()
 
 	printf(" All participants :%d\n\n",n);
 	while (i<=n){
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
+		
+		//Enter student number
 		printf("No.%d participator:\n",i);
 		printf("Student Number?");
 		scanf("%[^\n]",student);
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
+
+		//Creat a candidate information file with the name of the candidate number
 		sprintf(s, "%d",i);
 		fp2=fopen(s,"w");
+
+		//Enter student's name
 		printf("Name:");
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
 		scanf(" %[^\n]",name);
+
+		//Sex selection
 		printf("sex (male:0 female:1):");
 		scanf("%d",&check_sex);
 		if(check_sex==1){
@@ -350,18 +388,22 @@ void Sign_Up()
 		}else{
 			strcpy(sex,"male");
 		}
+
+		//Enter age
 		printf("Age?");
 		scanf("%d",&age);
+
+		//Enter phone number
 		printf("Phone numbers?");
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
 		scanf("%[^\n]",phone);
+
+		//Enter personal resume
 		printf("Individual resume?");
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
 		scanf("%[^\n]",person);
 		
-
+		//Write all informaitons into candidate's file
 		fprintf(fp2,"Student number:%s\nName：%s\nSex：%s\nAge：%d\nPhone：%s\nResume：%s",student,name,sex,age,phone,person);
 		name[20]=0;
 		sex[10]=0;
@@ -405,8 +447,7 @@ void start()
 		rollandprint(jishu,nums,roll,print);
 		printf("Congratulations! You got third prize!\n");
 		nums--;
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
 		printf("------------------------------------------\n");
 	}
 	FILE *fp1 = fopen("result.txt","a");
@@ -418,8 +459,7 @@ void start()
 		rollandprint(jishu,nums,roll,print);
 		printf("Congratulations! You got second prize!\n");
 		nums--;
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
 		printf("-----------------------------------------\n");
 	}
 	FILE *fp2 = fopen("result.txt","a");
@@ -431,8 +471,7 @@ void start()
 		rollandprint(jishu,nums,roll,print);	
 		printf("Congratulations! You got first prize!\n");
 		nums--;
-		fflush(stdin);
-		scanf("%*c");
+		buffer_clear();
 		printf("-----------------------------------------\n");
 	}
 	
